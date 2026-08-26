@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patitas Felices - Productos</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style_productos.css">
+    <link rel="stylesheet" href="css/style_footer.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">
+        <img src="imagenes/otras_imagenes/logo2.jpg" alt="Logo Patitas Felices">
+        <span>Patitas Felices</span>
+    </div>
+
+    <div id="hamburger" class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <nav id="menu" class="menu">
+        <ul>
+            <li><a href="home.html" style="color: #f29b2e; font-weight: bold;">Inicio</a></li>
+            <li><a href="productos.html" style="margin-left: 20px; text-decoration: none; color: #e11d48; font-weight: bold;">Productos</a></li>
+            <li>
+                <a href="carrito.html">
+                    <img src="imagenes/otras_imagenes/carrito.png" class="icono-carrito" alt="Carrito">
+                </a>
+            </li>
+            <li><a href="nosotros.html">Encuentranos</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+<section class="productos-section">
+    <h2 class="titulo-productos">Nuestros Productos</h2>
+
+    <!-- SELECTOR DE CATEGORÍAS -->
+    <div class="filtro-categorias">
+        <select id="selectCategoria" onchange="filtrarProductos()">
+            <option value="TODAS">Todas las categorías</option>
+            <option value="accesorios">Accesorios</option>
+            <option value="camas">Camas</option>
+            <option value="comida">Comida</option>
+            <option value="conejos">Conejos / Pequeñas Mascotas</option>
+            <option value="juguetes">Juguetes</option>
+            <option value="ropa">Ropa</option>
+        </select>
+    </div>
+
+    <!-- GRID DE PRODUCTOS -->
+    <div class="grid-productos" id="gridProductos">
+        <!-- Los productos se cargarán dinámicamente con JavaScript -->
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-contenido">
+
+        <div class="footer-col">
+            <img src="imagenes/otras_imagenes/logo2.jpg" class="footer-logo" alt="Logo Patitas Felices">
+            <p>&copy; 2026 Patitas Felices</p> 
+        </div>
+
+        <div class="footer-col">
+            <h3>Contacto</h3>
+            <p>Email: patitasfelices@gmail.com</p>
+            <p>Teléfono: 923258007</p>
+            <p>Dirección: Av. Principal #123</p>
+        </div>
+
+        <div class="footer-col">
+            <h3>Enlaces</h3>
+            <ul class="footer-links">
+                <li><a href="home.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="carrito.html">Carrito</a></li>
+                <li><a href="servicios.html">Nuestros Servicios</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-col redes-sociales-col">
+            <h3>Síguenos</h3>
+            <div class="redes-iconos">
+                <a href="https://www.facebook.com/tucuennnnta" target="_blank">
+                    <img src="imagenes/otras_imagenes/faceboock.png" alt="Facebook"> Facebook
+                </a>
+                <a href="https://www.instagram.com/tucuennnnta" target="_blank">
+                    <img src="imagenes/otras_imagenes/instagran.png" alt="Instagram"> Instagram
+                </a>
+                <a href="https://www.twitter.com/tucuennnnta" target="_blank">
+                    <img src="imagenes/otras_imagenes/x.png" alt="Twitter"> Twitter
+                </a>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="copyright-mobile">
+        <p>&copy; 2026 Patitas Felices</p>
+    </div>
+</footer>
+
+<script>
+// Lista completa con todos los archivos reales de tu carpeta imagenes/productos/
+const listaProductos = [
+    {
+        producto_id: 1,
+        nombre: "Bebedero Portátil para Perros",
+        precio: 25.90,
+        descripcion: "Práctico bebedero portátil ideal para paseos y viajes largos con tu engreído.",
+        categoria: "accesorios",
+        url_imagen: "imagenes/productos/bebedero_portatil_perro.webp"
+    },
+    {
+        producto_id: 2,
+        nombre: "Cama Confortable para Perro",
+        precio: 89.90,
+        descripcion: "Cama suave y acolchada para el descanso óptimo de tu perro.",
+        categoria: "camas",
+        url_imagen: "imagenes/productos/cama_perro.png"
+    },
+    {
+        producto_id: 3,
+        nombre: "Canasta de Seguridad para Auto",
+        precio: 115.00,
+        descripcion: "Asiento o canasta protectora para transportar a tu mascota de forma segura en el auto.",
+        categoria: "accesorios",
+        url_imagen: "imagenes/productos/canasta_para_auto_perro.jpg"
+    },
+    {
+        producto_id: 4,
+        nombre: "Canasta de Mimbre / Descanso",
+        precio: 75.00,
+        descripcion: "Elegante canasta de descanso para mascotas.",
+        categoria: "camas",
+        url_imagen: "imagenes/productos/cansta_perro.webp"
+    },
+    {
+        producto_id: 5,
+        nombre: "Casa Acogedora para Gato",
+        precio: 85.00,
+        descripcion: "Refugio cerrado e íntimo diseñado especialmente para felinos.",
+        categoria: "camas",
+        url_imagen: "imagenes/productos/casa_gato.png"
+    },
+    {
+        producto_id: 6,
+        nombre: "Casa Refugio para Perro",
+        precio: 130.00,
+        descripcion: "Casa resistente y cómoda para proteger a tu perro dentro de casa.",
+        categoria: "camas",
+        url_imagen: "imagenes/productos/casa_perro.png"
+    },
+    {
+        producto_id: 7,
+        nombre: "Collar Elegante para Gato",
+        precio: 15.90,
+        descripcion: "Collar cómodo y seguro con diseño especial para gatos.",
+        categoria: "accesorios",
+        url_imagen: "imagenes/productos/collar_gato.png"
+    },
+    {
+        producto_id: 8,
+        nombre: "Alimento Seco Brit Care para Gato",
+        precio: 78.50,
+        descripcion: "Alimento súper premium formulado para la nutrición equilibrada de gatos.",
+        categoria: "comida",
+        url_imagen: "imagenes/productos/comida_gato_Brit_Care.png"
+    },
+    {
+        producto_id: 9,
+        nombre: "Snacks Kissito para Gato",
+        precio: 9.90,
+        descripcion: "Deliciosos premios cremosos que encantarán a tu minino desde el primer bocado.",
+        categoria: "comida",
+        url_imagen: "imagenes/productos/comida_gato_Kissito.png"
+    },
+    {
+        producto_id: 10,
+        nombre: "Comida Húmeda Moochie Masti (Oferta)",
+        precio: 6.50,
+        descripcion: "Sobre de comida húmeda en oferta especial para consentir a tu gato.",
+        categoria: "comida",
+        url_imagen: "imagenes/productos/comida_gato_moochie_masti_oferta.png"
+    },
+    {
+        producto_id: 11,
+        nombre: "Comida Húmeda Moochie Gato (Oferta)",
+        precio: 6.90,
+        descripcion: "Deliciosa receta natural en oferta para gatos exigentes.",
+        categoria: "comida",
+        url_imagen: "imagenes/productos/comida_gato_moochie_oferta.png"
+    },
+    {
+        producto_id: 12,
+        nombre: "Alimento Especial para Hámster y Pequeñas Mascotas",
+        precio: 22.50,
+        descripcion: "Mezcla de semillas y nutrientes esenciales para roedores y hámsters.",
+        categoria: "conejos",
+        url_imagen: "imagenes/productos/comida_hamster.png"
+    },
+    {
+        producto_id: 13,
+        nombre: "Alimento Perro Allkjoy (Oferta)",
+        precio: 49.90,
+        descripcion: "Alimento seco completo para perros en presentación especial de oferta.",
+        categoria: "comida",
+        url_imagen: "imagenes/productos/comida_perro_allkjoy_oferta.png"
+    },
+    {
+        producto_id: 14,
+        nombre: "Alimento Brit Care Perro (Oferta)",
+        precio: 89.00,
+        descripcion: "Nutrición hipoalergénica de alta calidad para perros en oferta.",
+        categoria: "comida",
+        url_imagen: "imagenes/productos/comida_perro_Brit_Care_oferta.png"
+    },
+    {
+        producto_id: 15,
+        nombre: "Alimento Canbo Perro (Oferta)",
+        precio: 55.00,
+        descripcion: "Comida seca Canbo con descuento especial por temporada.",
+        categoria: "comida",
+        url_imagen: "imagenes/productos/comida_perro_cambo_oferta.png"
+    },
+    {
+        producto_id: 16,
+        nombre: "Alimento Mio Cane Perro (Oferta)",
+        precio: 145.00,
+        descripcion: "Saco de alimento premium Mio Cane para perro con tarifa de oferta.",
+        categoria: "comida",
+        url_imagen: "imagenes/productos/comida_perro_Mio_Cane_oferta.png"
+    },
+    {
+        producto_id: 17,
+        nombre: "Alimento Mio Cane Adulto",
+        precio: 155.00,
+        descripcion: "Alimento balanceado con proteínas de alta calidad para perros adultos.",
+        categoria: "comida",
+        url_imagen: "imagenes/productos/comida_perro_Mio_Cane.png"
+    },
+    {
+        producto_id: 18,
+        nombre: "Alimento Rambala Barf",
+        precio: 18.00,
+        descripcion: "Dieta natural cruda biológicamente apropiada para perros.",
+        categoria: "comida",
+        url_imagen: "imagenes/productos/comida_perro_Rambala.png"
+    },
+    {
+        producto_id: 19,
+        nombre: "Snacks Soft Savories para Perro",
+        precio: 21.00,
+        descripcion: "Premios suaves y masticables ideales para entrenar a tu mascota.",
+        categoria: "comida",
+        url_imagen: "imagenes/productos/comida_perro_Soft_Savories.png"
+    },
+    {
+        producto_id: 20,
+        nombre: "Gran Bebedero de Agua Automático",
+        precio: 45.00,
+        descripcion: "Dispensador de agua de gran capacidad para mantener hidratada a tu mascota todo el día.",
+        categoria: "accesorios",
+        url_imagen: "imagenes/productos/gran_bebedero_agua.jpeg"
+    },
+    {
+        producto_id: 21,
+        nombre: "Juguete Interactivo para Gato",
+        precio: 19.90,
+        descripcion: "Juguete divertido para estimular los instintos de caza y juego de tu felino.",
+        categoria: "juguetes",
+        url_imagen: "imagenes/productos/juguete_gato.png"
+    },
+    {
+        producto_id: 22,
+        nombre: "Juguete de Cuerda para Perro (Oferta)",
+        precio: 14.90,
+        descripcion: "Cuerda trenzada resistente para limpiar dientes y jugar a tirar y aflojar.",
+        categoria: "juguetes",
+        url_imagen: "imagenes/productos/juguete_perro_cuerda_oferta.png"
+    },
+    {
+        producto_id: 23,
+        nombre: "Plato Doble de Comida y Agua",
+        precio: 24.50,
+        descripcion: "Plato doble ergonómico y fácil de lavar para la alimentación diaria.",
+        categoria: "accesorios",
+        url_imagen: "imagenes/productos/plato_comida_.png"
+    },
+    {
+        producto_id: 24,
+        nombre: "Ropa con Gorro para Perro",
+        precio: 32.00,
+        descripcion: "Adorable abrigo con capucha para proteger a tu perro del frío con estilo.",
+        categoria: "ropa",
+        url_imagen: "imagenes/productos/ropa_perro_gorro_de_perro.jpg"
+    },
+    {
+        producto_id: 25,
+        nombre: "Abrigo Clásico para Perro",
+        precio: 28.00,
+        descripcion: "Prenda abrigadora y cómoda para los paseos en días frescos.",
+        categoria: "ropa",
+        url_imagen: "imagenes/productos/ropa_perro.png"
+    },
+    {
+        producto_id: 26,
+        nombre: "Traje / Disfraz Estiloso para Perro",
+        precio: 35.00,
+        descripcion: "Ropa elegante y divertida para ocasiones especiales o disfrazar a tu mascota.",
+        categoria: "ropa",
+        url_imagen: "imagenes/productos/ropa_perro2.jpg"
+    }
+];
+
+// Cargar productos al abrir la página
+document.addEventListener("DOMContentLoaded", () => {
+    mostrarProductos(listaProductos);
+});
+
+// Función para filtrar por categoría seleccionada
+function filtrarProductos() {
+    const categoriaSeleccionada = document.getElementById("selectCategoria").value;
+    
+    if (categoriaSeleccionada === "TODAS") {
+        mostrarProductos(listaProductos);
+    } else {
+        const filtrados = listaProductos.filter(p => p.categoria === categoriaSeleccionada);
+        mostrarProductos(filtrados);
+    }
+}
+
+// Renderizar productos en el Grid
+function mostrarProductos(productos) {
+    const grid = document.getElementById("gridProductos");
+    grid.innerHTML = "";
+
+    if (productos.length === 0) {
+        grid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#666;">No hay productos en esta categoría.</p>`;
+        return;
+    }
+
+    productos.forEach(p => {
+        let card = document.createElement("div");
+        card.className = "card-producto";
+        card.innerHTML = `
+            <img src="${p.url_imagen}" alt="${p.nombre}">
+            <h3>${p.nombre}</h3>
+            <p class="precio">S/ ${Number(p.precio).toFixed(2)}</p>
+            <p class="descripcion">${p.descripcion}</p>
+            <button onclick="agregarAlCarrito(${p.producto_id}, '${p.nombre.replace(/'/g, "\\'")}', ${p.precio}, '${p.url_imagen}')" class="btn-carrito">🛒</button>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+// Lógica de agregar al carrito con localStorage
+function agregarAlCarrito(id, nombre, precio, imagen) {
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    
+    let existente = carrito.find(item => item.id === id);
+    if (existente) {
+        existente.cantidad += 1;
+    } else {
+        carrito.push({
+            id: id,
+            nombre: nombre,
+            precio: precio,
+            imagen: imagen,
+            cantidad: 1
+        });
+    }
+
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+    mostrarMensaje("Producto agregado 🐾");
+}
+
+// Mostrar alerta visual flotante
+function mostrarMensaje(texto) {
+    const aviso = document.createElement("div");
+    aviso.className = "mensaje-carrito";
+    aviso.innerText = texto;
+    aviso.style.cssText = "position: fixed; bottom: 20px; right: 20px; background: #333; color: #fff; padding: 12px 20px; border-radius: 8px; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.1);";
+
+    document.body.appendChild(aviso);
+    setTimeout(() => aviso.remove(), 2000);
+}
+</script>
+
+</body>
+</html>

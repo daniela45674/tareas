@@ -1,0 +1,634 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    /* Palette - Warm & Premium */
+    --primary: #f29b2e;
+    --primary-dark: #d98510;
+    --primary-light: #ffb85c;
+    
+    --secondary: #2c3e50;
+    --secondary-dark: #1a252f;
+    
+    --text-main: #333333;
+    --text-muted: #666666;
+    --text-light: #999999;
+    
+    --bg-body: #f8f9fa;
+    --bg-white: #ffffff;
+    --bg-glass: rgba(255, 255, 255, 0.95);
+
+    /* Spacing & Borders */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+    
+    /* Shadows (Soft & Modern) */
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
+    --shadow-lg: 0 16px 48px rgba(0,0,0,0.12);
+    
+    /* Transitions */
+    --ease-smooth: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s var(--ease-smooth);
+}
+
+ul {
+    list-style: none;
+}
+
+section {
+    padding: 60px 20px;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* HEADER */
+.header {
+    background: var(--bg-white);
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow-sm);
+    transition: padding 0.3s ease;
+}
+
+.header.scrolled {
+    padding: 10px 40px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--secondary);
+}
+
+.logo img {
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid var(--primary);
+}
+
+.menu ul {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.menu a {
+    font-weight: 500;
+    color: var(--secondary);
+    font-size: 0.95rem;
+    position: relative;
+}
+
+.menu a:hover, .menu a.active {
+    color: var(--primary);
+}
+
+.menu a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: var(--primary);
+    transition: width 0.3s var(--ease-smooth);
+}
+
+.menu a:hover::after {
+    width: 100%;
+}
+
+.btn-login-menu {
+    background: var(--primary);
+    color: white !important;
+    padding: 8px 20px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(242, 155, 46, 0.4);
+}
+
+.btn-login-menu:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.btn-login-menu::after {
+    display: none; /* No underline for button */
+}
+
+.icono-carrito {
+    height: 24px;
+}
+
+/* HAMBURGER */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.hamburger span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--secondary);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+/* HERO SECTION */
+.hero {
+    position: relative;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7));
+}
+
+.contenido-hero {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 0 20px;
+    animation: fadeIn 1s ease-out;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.hero p {
+    font-size: 1.25rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+/* BUTTONS */
+button, .btn-primary {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(242, 155, 46, 0.3);
+    transition: all 0.3s var(--ease-smooth);
+}
+
+button:hover, .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(242, 155, 46, 0.4);
+}
+
+/* --- ESTILOS DEL CARRUSEL PRINCIPAL DE INICIO --- */
+#inicio {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+.carousel-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+}
+
+.carousel-item.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0));
+    color: #fff;
+    padding: 30px 20px 20px 20px;
+    text-align: left;
+}
+
+.carousel-overlay h2 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.carousel-overlay p {
+    font-size: 1rem;
+    max-width: 700px;
+    color: #f1f5f9;
+}
+
+.carousel-controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    padding: 0 15px;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+.carousel-btn {
+    pointer-events: auto;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.carousel-btn:hover {
+    background: var(--primary);
+    transform: scale(1.1);
+}
+
+.carousel-indicators {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.indicator {
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.indicator.active {
+    background: #fff;
+    transform: scale(1.2);
+}
+
+/* --- CARRUSEL MULTIIMAGEN (OFERTAS) --- */
+.carrusel-multi {
+    position: relative;
+    max-width: 1280px;
+    margin: 40px auto;
+    overflow: hidden;
+    padding: 0 40px;
+    text-align: center;
+}
+
+.carrusel-multi h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: var(--secondary);
+}
+
+.contenedor-multi {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    width: 100%;
+}
+
+.slide-multi {
+    flex: 0 0 calc(33.333% - 15px);
+    margin-right: 15px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    background: white;
+    transition: all 0.3s;
+}
+
+.slide-multi:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.slide-multi img {
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+    padding: 15px;
+    background: #fff;
+}
+
+/* Botones laterales del carrusel multiimagen */
+.carrusel-multi .btn {
+    position: absolute;
+    top: 55%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, transform 0.3s;
+    z-index: 10;
+    box-shadow: var(--shadow-md);
+}
+
+.carrusel-multi .btn:hover {
+    background: var(--primary);
+    transform: translateY(-50%) scale(1.05);
+}
+
+.carrusel-multi .btn.prev {
+    left: 5px;
+}
+
+.carrusel-multi .btn.next {
+    right: 5px;
+}
+
+/* PAYMENT BANNER */
+.banner-pago {
+    margin: 40px auto;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    max-width: 1280px;
+    padding: 0 20px;
+}
+
+.banner-pago img {
+    width: 100%;
+    border-radius: var(--radius-md);
+}
+
+/* CARDS GRID */
+.info-tarjetas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 0 20px;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.tarjeta {
+    background: white;
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.tarjeta:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.tarjeta img {
+    height: 180px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    margin-bottom: 20px;
+}
+
+.tarjeta h3 {
+    margin-bottom: 15px;
+    color: var(--secondary);
+}
+
+.tarjeta p {
+    color: var(--text-muted);
+}
+
+/* INTRODUCTION */
+.introduccion {
+    text-align: center;
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 60px;
+    box-shadow: var(--shadow-md);
+    margin: 60px auto;
+    max-width: 1280px;
+}
+
+.introduccion h2 {
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+/* SECCIÓN ¿POR QUÉ ELEGIRNOS? */
+.seccion-elegirnos {
+    max-width: 1100px;
+    margin: 40px auto 80px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.seccion-elegirnos h2 {
+    font-size: 34px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.elegirnos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 25px;
+}
+
+.elegirnos-item {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 14px rgba(255, 195, 0, 0.35);
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.elegirnos-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 7px 18px rgba(255, 195, 0, 0.6);
+}
+
+.elegirnos-icon {
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+
+.elegirnos-item h3 {
+    font-size: 20px;
+    color: #444;
+    margin-bottom: 8px;
+}
+
+.elegirnos-item p {
+    font-size: 15px;
+    color: #555;
+}
+
+/* UTILS & ANIMATIONS */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 980px) {
+    .slide-multi {
+        flex: 0 0 calc(50% - 15px);
+    }
+}
+
+@media (max-width: 900px) {
+    .header {
+        padding: 15px 20px;
+    }
+    
+    .menu {
+        position: fixed;
+        top: 70px;
+        right: -100%;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background: var(--bg-white);
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        transition: right 0.3s ease;
+        box-shadow: var(--shadow-lg);
+    }
+
+    .menu.activo {
+        right: 0;
+    }
+
+    .menu ul {
+        flex-direction: column;
+        gap: 25px;
+        margin-top: 40px;
+        display: flex !important;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel {
+        height: 300px;
+    }
+    .carousel-overlay h2 {
+        font-size: 1.5rem;
+    }
+    .carousel-overlay p {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 620px) {
+    .slide-multi {
+        flex: 0 0 100%;
+        margin-right: 0;
+    }
+    .carrusel-multi {
+        padding: 0 20px;
+    }
+}
