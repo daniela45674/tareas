@@ -1,4 +1,6 @@
-// Menú Hamburguesa
+// ==========================================
+// 1. MENÚ HAMBURGUESA
+// ==========================================
 const hamburger = document.getElementById('hamburger');
 const menu = document.getElementById('menu');
 
@@ -30,7 +32,9 @@ if (hamburger && menu) {
     });
 }
 
-// Script del Nuevo Carrusel Principal
+// ==========================================
+// 2. CARRUSEL PRINCIPAL
+// ==========================================
 document.addEventListener("DOMContentLoaded", () => {
     const items = document.querySelectorAll(".carousel-item");
     const indicators = document.querySelectorAll(".carousel-indicators .indicator");
@@ -104,7 +108,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// Carrusel Multiimagen Animado y Responsivo (Ofertas)
+// ==========================================
+// 3. CARRUSEL MULTIIMAGEN (OFERTAS)
+// ==========================================
 const contenedorMulti = document.getElementById("contenedorMulti");
 if (contenedorMulti) {
     let indexMulti = 0;
@@ -200,4 +206,49 @@ if (contenedorMulti) {
     });
 
     actualizarMulti();
+}
+
+// ==========================================
+// 4. API DE TIPO DE CAMBIO (MONEDAS)
+// ==========================================
+const API_TIPO_CAMBIO = "https://open.er-api.com/v6/latest/PEN";
+let tasasCambio = {};
+let monedaActual = 'PEN'; // Soles por defecto
+
+// Cargar tasas al iniciar la página
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        let respuesta = await fetch(API_TIPO_CAMBIO);
+        let datos = await respuesta.json();
+        if (datos.result === "success") {
+            tasasCambio = datos.rates;
+        }
+    } catch (error) {
+        console.error("Error al obtener tipo de cambio:", error);
+    }
+});
+
+// Función que se activa al hacer clic en los botones de moneda
+function cambiarMoneda(moneda) {
+    monedaActual = moneda;
+    
+   
+    document.querySelectorAll('.btn-moneda').forEach(b => b.classList.remove('active'));
+    let btnActivo = document.getElementById(`btn${moneda}`);
+    if (btnActivo) btnActivo.classList.add('active');
+
+    
+    if (typeof listaProductos !== 'undefined' && typeof mostrarProductos === 'function') {
+        mostrarProductos(listaProductos);
+    }
+}
+
+// Función para calcular y formatear el precio según la moneda activa
+function formatearPrecio(precioEnSoles) {
+    let tasa = tasasCambio[monedaActual] || 1;
+    let precioConvertido = precioEnSoles * tasa;
+    
+    if (monedaActual === 'USD') return `$ ${precioConvertido.toFixed(2)}`; //estos dos hacen que cambie a moneda no es necesario poner  los soles ya que estan por defecto
+    if (monedaActual === 'EUR') return `€ ${precioConvertido.toFixed(2)}`;
+    return `S/ ${precioConvertido.toFixed(2)}`;
 }

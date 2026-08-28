@@ -10,7 +10,6 @@
 </head>
 <body>
 
-<!-- HEADER ESTÁTICO -->
 <header class="header">
     <div class="logo">
         <img src="imagenes/otras_imagenes/logo2.jpg" alt="Logo Patitas Felices">
@@ -25,7 +24,7 @@
 
     <nav id="menu" class="menu">
         <ul>
-            <li><a href="home.html" style="color: #f29b2e; font-weight: bold;">Inicio</a></li>
+            <li><a href="home.html">Inicio</a></li>
             <li><a href="productos.html">Productos</a></li>
             <li>
                 <a href="carrito.html">
@@ -40,25 +39,28 @@
 <section class="carrito-section">
     <h2 class="titulo-carrito">Tu Carrito</h2>
 
-    <!-- Contenedor donde JS pintará los productos del carrito -->
-    <div class="lista-carrito" id="listaCarrito">
-        <!-- Los ítems se cargarán dinámicamente aquí -->
+    <!-- NUEVO: Botones de Moneda también en el carrito para sincronizar la conversión -->
+    <div class="botones-moneda" style="margin-bottom: 25px;">
+        <button onclick="cambiarMoneda('USD')" class="btn-moneda" id="btnUSD">dolares</button>
+        <button onclick="cambiarMoneda('EUR')" class="btn-moneda" id="btnEUR">euros</button>
+        <button onclick="cambiarMoneda('PEN')" class="btn-moneda active" id="btnPEN">soles</button>
     </div>
 
-    <!-- TOTAL -->
+    <div class="lista-carrito" id="listaCarrito">
+        <!-- Los ítems se cargan dinámicamente aquí -->
+    </div>
+
     <div class="total-carrito">
         <h2>Total general:  
             <span id="totalGeneral">S/ 0.00</span>
         </h2>
     </div>
 
-    <!-- BOTÓN COMPRAR AHORA (WHATSAPP O CHECKOUT) -->
     <div class="comprar-ahora-box">
-        <button onclick="enviarPedidoWhatsApp()" class="btn-comprar-ahora" style="border: none; cursor: pointer;">Comprar por WhatsApp</button>
+        <button onclick="enviarPedidoWhatsApp()" class="btn-comprar-ahora" style="border: none; cursor: pointer;">Comprar por WhatsApp 🛒📱</button>
     </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="footer">
     <div class="footer-contenido">
 
@@ -106,10 +108,12 @@
     </div>
 </footer>
 
+<script src="js/script.js"></script>
+
 <script>
 // Cargar y renderizar el carrito al abrir la página
 document.addEventListener("DOMContentLoaded", () => {
-    cargarCarrito();
+    setTimeout(cargarCarrito, 200);
 });
 
 function cargarCarrito() {
@@ -119,17 +123,17 @@ function cargarCarrito() {
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     
     listaCarrito.innerHTML = "";
-    let precioTotal = 0;
+    let precioTotalSoles = 0;
 
     if (carrito.length === 0) {
         listaCarrito.innerHTML = `<p style="text-align:center; padding: 30px; color: #666; font-size: 18px;">Tu carrito está vacío 🐾</p>`;
-        totalGeneralEl.innerText = "S/ 0.00";
+        totalGeneralEl.innerText = formatearPrecio(0);
         return;
     }
 
     carrito.forEach((item, index) => {
-        let subtotal = item.precio * item.cantidad;
-        precioTotal += subtotal;
+        let subtotalSoles = item.precio * item.cantidad;
+        precioTotalSoles += subtotalSoles;
 
         let itemDiv = document.createElement("div");
         itemDiv.className = "item-carrito";
@@ -137,7 +141,7 @@ function cargarCarrito() {
             <img src="${item.imagen}" alt="producto">
             <div class="info-carrito">
                 <h3>${item.nombre}</h3>
-                <p class="precio-unit">Precio: <strong>S/ ${Number(item.precio).toFixed(2)}</strong></p>
+                <p class="precio-unit">Precio: <strong>${formatearPrecio(item.precio)}</strong></p>
                 
                 <div class="botones-carrito">
                     <button type="button" class="btn-cantidad" onclick="cambiarCantidad(${index}, 1)">+</button>
@@ -145,15 +149,25 @@ function cargarCarrito() {
                     <button type="button" class="btn-cantidad" onclick="cambiarCantidad(${index}, -1)">-</button>
                 </div>
 
-                <p class="subtotal">Subtotal: <strong>S/ ${subtotal.toFixed(2)}</strong></p>
+                <p class="subtotal">Subtotal: <strong>${formatearPrecio(subtotalSoles)}</strong></p>
             </div>
             <button type="button" class="btn-eliminar" onclick="eliminarItem(${index})">✖</button>
         `;
         listaCarrito.appendChild(itemDiv);
     });
 
-    totalGeneralEl.innerText = `S/ ${precioTotal.toFixed(2)}`;
+    totalGeneralEl.innerText = formatearPrecio(precioTotalSoles);
 }
+
+// Sobrescribimos o complementamos la función cambiarMoneda para que también actualice el carrito en tiempo real
+const cambiarMonedaOriginal = window.cambiarMoneda;
+window.cambiarMoneda = function(moneda) {
+    if (typeof cambiarMonedaOriginal === 'function') {
+        cambiarMonedaOriginal(moneda);
+    }
+    // Refrescar el carrito para que se recalculen los precios con la nueva moneda seleccionada
+    cargarCarrito();
+};
 
 // Sumar o restar cantidades
 function cambiarCantidad(index, cambio) {
@@ -175,7 +189,6 @@ function eliminarItem(index) {
     carrito.splice(index, 1);
     localStorage.setItem('carrito', JSON.stringify(carrito));
     
-    // Mostrar aviso visual
     let aviso = document.createElement("div");
     aviso.className = "mensaje-eliminado";
     aviso.innerText = "Producto eliminado 🗑️";
@@ -185,7 +198,7 @@ function eliminarItem(index) {
     cargarCarrito();
 }
 
-// Enviar pedido múltiple a WhatsApp
+// Enviar pedido múltiple a WhatsApp con la moneda activa seleccionada
 function enviarPedidoWhatsApp() {
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     if (carrito.length === 0) {
@@ -193,21 +206,21 @@ function enviarPedidoWhatsApp() {
         return;
     }
 
-    let mensaje = "¡Hola, Deseo realizar el siguiente pedido:\n\n";
-    let precioTotal = 0;
+    let mensaje = "¡Hola, Patitas Felices! 🐾 Deseo realizar el siguiente pedido:\n\n";
+    let precioTotalSoles = 0;
 
     carrito.forEach((item, index) => {
-        let subtotal = item.precio * item.cantidad;
-        precioTotal += subtotal;
+        let subtotalSoles = item.precio * item.cantidad;
+        precioTotalSoles += subtotalSoles;
 
         mensaje += `*${index + 1}. ${item.nombre}*\n`;
         mensaje += `   Cantidad: ${item.cantidad}\n`;
-        mensaje += `   Precio unitario: S/ ${Number(item.precio).toFixed(2)}\n`;
-        mensaje += `   Subtotal: S/ ${Number(subtotal).toFixed(2)}\n\n`;
+        mensaje += `   Precio unitario: ${formatearPrecio(item.precio)}\n`;
+        mensaje += `   Subtotal: ${formatearPrecio(subtotalSoles)}\n\n`;
     });
 
-    mensaje += `------------------------\n`;
-    mensaje += `*Total a pagar: S/ ${Number(precioTotal).toFixed(2)}*\n\n`;
+    mensaje += `\n`;
+    mensaje += `*Total a pagar: ${formatearPrecio(precioTotalSoles)}*\n\n`;
     mensaje += "Quedo a la espera de la confirmación. ¡Gracias!";
 
     let numeroWhatsApp = "51923258007"; 

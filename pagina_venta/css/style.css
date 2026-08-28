@@ -13,9 +13,9 @@
     --text-muted: #666666;
     --text-light: #999999;
     
-    --bg-body: #f8f9fa;
+    --bg-body: #faf9f8;
     --bg-white: #ffffff;
-    --bg-glass: rgba(255, 255, 255, 0.95);
+    --bg-glass: rgba(248, 237, 198, 0.95);
 
     /* Spacing & Borders */
     --radius-sm: 8px;

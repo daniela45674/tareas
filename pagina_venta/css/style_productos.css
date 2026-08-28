@@ -6,14 +6,27 @@
 .titulo-productos {
     text-align: center;
     font-size: 2.5rem;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     color: #2c3e50;
     font-weight: 700;
 }
 
+/* --- BARRA SUPERIOR: FILTRO Y MONEDAS LADO A LADO --- */
+.barra-filtros-moneda {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .filtro-categorias {
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 0; /* Ajustado para que trabaje con el flexbox */
 }
 
 .filtro-categorias select {
@@ -35,6 +48,37 @@
     box-shadow: 0 4px 15px rgba(242, 155, 46, 0.2);
 }
 
+/* --- CONTENEDOR DE BOTONES DE MONEDA --- */
+.botones-moneda {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-moneda {
+    background-color: #fff;
+    border: 2px solid #ccc;
+    padding: 10px 22px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #555;
+    font-size: 15px;
+    text-transform: lowercase;
+    transition: all 0.3s ease;
+}
+
+.btn-moneda:hover {
+    border-color: #f29b2e;
+    color: #f29b2e;
+}
+
+.btn-moneda.active {
+    background-color: #333;
+    color: #fff;
+    border-color: #333;
+}
+
+/* --- GRID DE PRODUCTOS --- */
 .grid-productos {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -47,7 +91,6 @@
     background: white;
     border-radius: 20px;
     border: 2px solid #e0e0e0;
-    /* Added border */
     overflow: hidden;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
     transition: transform 0.3s, box-shadow 0.3s;
@@ -95,7 +138,6 @@
     bottom: 20px;
     right: 20px;
     background: #3498db;
-    /* Blue */
     color: white;
     width: 45px;
     height: 45px;
@@ -107,17 +149,15 @@
     border: none;
     cursor: pointer;
     box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
-    /* Blue shadow */
     transition: transform 0.2s, background 0.2s;
 }
 
 .btn-carrito:hover {
     background: #2980b9;
-    /* Darker Blue */
     transform: scale(1.1);
 }
 
-/* MENSAJE FLOTANTE */
+/* --- MENSAJE FLOTANTE --- */
 .mensaje-carrito {
     position: fixed;
     bottom: 30px;
@@ -137,7 +177,6 @@
         opacity: 0;
         transform: translateY(20px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);

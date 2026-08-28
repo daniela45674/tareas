@@ -139,28 +139,13 @@
         height: 180px;
     }
 }
-/* Botón Comprar Ahora */
+
+/* --- BOTÓN COMPRAR AHORA --- */
 .comprar-ahora-box {
     text-align: center;
     margin: 25px 0 50px;
 }
 
-.btn-comprar-ahora {
-    background: #ff7a00;
-    padding: 14px 35px;
-    color: white;
-    font-size: 20px;
-    border-radius: 10px;
-    font-weight: bold;
-    text-decoration: none;
-    display: inline-block;
-    transition: 0.3s ease;
-}
-
-.btn-comprar-ahora:hover {
-    background: #e06600;
-    transform: scale(1.05);
-}
 .btn-comprar-ahora {
     all: unset !important;
     display: inline-block !important;
@@ -179,6 +164,8 @@
     background: #e06600 !important;
     transform: scale(1.05) !important;
 }
+
+/* --- MENSAJE FLOTANTE ELIMINADO --- */
 .mensaje-eliminado {
     position: fixed;
     bottom: 20px;
@@ -197,3 +184,33 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* --- ESTILOS PARA LOS BOTONES DE MONEDA (NUEVO) --- */
+.botones-moneda {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.btn-moneda {
+    background-color: #fff;
+    border: 2px solid #ccc;
+    padding: 8px 22px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #555;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.btn-moneda:hover {
+    border-color: #f29b2e;
+    color: #f29b2e;
+}
+
+.btn-moneda.active {
+    background-color: #f29b2e;
+    color: #fff;
+    border-color: #f29b2e;
+}

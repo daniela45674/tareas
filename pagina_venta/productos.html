@@ -40,17 +40,27 @@
 <section class="productos-section">
     <h2 class="titulo-productos">Nuestros Productos</h2>
 
-    <!-- SELECTOR DE CATEGORÍAS -->
-    <div class="filtro-categorias">
-        <select id="selectCategoria" onchange="filtrarProductos()">
-            <option value="TODAS">Todas las categorías</option>
-            <option value="accesorios">Accesorios</option>
-            <option value="camas">Camas</option>
-            <option value="comida">Comida</option>
-            <option value="conejos">Conejos / Pequeñas Mascotas</option>
-            <option value="juguetes">Juguetes</option>
-            <option value="ropa">Ropa</option>
-        </select>
+    <!-- BARRA SUPERIOR: FILTRO Y MONEDAS ALINEADOS -->
+    <div class="barra-filtros-moneda">
+        <!-- SELECTOR DE CATEGORÍAS -->
+        <div class="filtro-categorias">
+            <select id="selectCategoria" onchange="filtrarProductos()">
+                <option value="TODAS">Todas las categorías</option>
+                <option value="accesorios">Accesorios</option>
+                <option value="camas">Camas</option>
+                <option value="comida">Comida</option>
+                <option value="conejos">Conejos / Pequeñas Mascotas</option>
+                <option value="juguetes">Juguetes</option>
+                <option value="ropa">Ropa</option>
+            </select>
+        </div>
+
+        <!-- BOTONES DE MONEDA -->
+        <div class="botones-moneda">
+            <button onclick="cambiarMoneda('PEN')" class="btn-moneda active" id="btnPEN">Soles</button>
+            <button onclick="cambiarMoneda('USD')" class="btn-moneda" id="btnUSD">Dólares</button>
+            <button onclick="cambiarMoneda('EUR')" class="btn-moneda" id="btnEUR">Euros</button>
+        </div>
     </div>
 
     <!-- GRID DE PRODUCTOS -->
@@ -322,10 +332,10 @@ const listaProductos = [
 
 // Cargar productos al abrir la página
 document.addEventListener("DOMContentLoaded", () => {
-    mostrarProductos(listaProductos);
+    filtrarProductos();
 });
 
-// Función para filtrar por categoría seleccionada
+// Función para filtrar por categoría seleccionada manteniendo el filtro actual
 function filtrarProductos() {
     const categoriaSeleccionada = document.getElementById("selectCategoria").value;
     
@@ -337,7 +347,7 @@ function filtrarProductos() {
     }
 }
 
-// Renderizar productos en el Grid
+// Renderizar productos en el Grid usando la función global de formato de moneda (`formatearPrecio` o script.js si ya lo maneja)
 function mostrarProductos(productos) {
     const grid = document.getElementById("gridProductos");
     grid.innerHTML = "";
@@ -353,7 +363,7 @@ function mostrarProductos(productos) {
         card.innerHTML = `
             <img src="${p.url_imagen}" alt="${p.nombre}">
             <h3>${p.nombre}</h3>
-            <p class="precio">S/ ${Number(p.precio).toFixed(2)}</p>
+            <p class="precio">${typeof formatearPrecio === 'function' ? formatearPrecio(p.precio) : 'S/ ' + Number(p.precio).toFixed(2)}</p>
             <p class="descripcion">${p.descripcion}</p>
             <button onclick="agregarAlCarrito(${p.producto_id}, '${p.nombre.replace(/'/g, "\\'")}', ${p.precio}, '${p.url_imagen}')" class="btn-carrito">🛒</button>
         `;
@@ -393,6 +403,7 @@ function mostrarMensaje(texto) {
     setTimeout(() => aviso.remove(), 2000);
 }
 </script>
+<script src="js/script.js"></script>
 
 </body>
 </html>
