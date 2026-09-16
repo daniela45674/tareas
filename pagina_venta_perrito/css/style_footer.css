@@ -1,0 +1,180 @@
+/* CONTENEDOR PRINCIPAL */
+.footer {
+    background-color: #1a1a1a; /* Fondo oscuro, similar al negro */
+    color: #fff;
+    padding: 40px 20px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 50px; 
+}
+
+/* ORGANIZACIÓN INTERNA */
+.footer-contenido {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px; 
+    padding-bottom: 20px;
+}
+
+.footer-col { /* Selector correcto para las columnas */
+    flex: 1;
+    min-width: 200px; 
+}
+
+/* LOGO: Estilo para hacerlo redondo */
+.footer-logo { 
+    width: 100px; /* Reducido para mejor balance */
+    height: 100px; /* Reducido para mejor balance */
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 10px 0; /* Alineación a la izquierda en desktop */
+    border-radius: 50%; /* REDONDO */
+    border: 3px solid #f09c4d; /* Borde naranja que destaca */
+}
+
+/* TÍTULOS */
+.footer-col h3 { 
+    border-bottom: 2px solid #542f11;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    color: #f09c4d; /* Color naranja */
+    font-size: 1.2em;
+}
+
+/* --- ESTILOS PARA LA INTEGRACIÓN DE ICONOS --- */
+
+/* Estilo de los iconos incrustados (Contacto y Enlaces) */
+.icon {
+    width: 20px; /* Tamaño del icono */
+    height: 20px;
+    margin-right: 8px;
+    filter: invert(70%) sepia(100%) saturate(2000%) hue-rotate(330deg); 
+    /* Esta línea transforma el color del icono a un naranja o blanco para contraste, dependiendo del icono original */
+    vertical-align: middle;
+}
+
+/* Texto de Contacto y Enlaces, asegurando que el icono y el texto estén alineados */
+.footer-col p, 
+.footer-links li a {
+    margin-bottom: 10px;
+    font-size: 0.95em;
+    color: #ccc;
+    display: flex; /* Permite alinear el icono y el texto */
+    align-items: center; /* Alineación vertical */
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+/* --- ESTILO DE LISTA PARA ENLACES (Columnas de Enlaces) --- */
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li a:hover {
+    color: #f09c4d; /* Cambio de color al pasar el ratón */
+}
+
+/* --- REDES SOCIALES (columna 'redes-sociales-col') --- */
+.redes-sociales-col .redes-iconos {
+    display: flex;
+    flex-direction: column; /* Apila los enlaces social media verticalmente */
+    gap: 15px; /* Espacio entre los enlaces */
+}
+
+.redes-iconos a {
+    text-decoration: none;
+    color: #ccc;
+    transition: 0.3s;
+    display: flex;
+    align-items: center; /* Alinea el icono y el texto */
+}
+
+/* Estilo para los iconos de Redes Sociales */
+.redes-iconos a img {
+    width: 30px; /* Tamaño ligeramente más grande para redes sociales */
+    height: 30px;
+    margin-right: 10px;
+    transition: transform 0.3s;
+    filter: invert(100%); /* Hace el icono blanco/claro */
+}
+
+.redes-iconos a:hover {
+    color: #f09c4d;
+}
+
+.redes-iconos a:hover img {
+    transform: scale(1.1); /* Efecto de crecimiento al pasar el ratón */
+    filter: invert(70%) sepia(100%) saturate(2000%) hue-rotate(330deg); /* Color naranja al hacer hover */
+}
+
+/* --- COPYRIGHTS --- */
+
+/* COPYRIGHT EN DESKTOP (dentro de la primera columna) */
+.footer-col:first-child {
+    display: flex;
+    flex-direction: column;
+    /* Ajusta la alineación para el contenido de la columna 1 */
+    text-align: left; 
+}
+
+.footer-col:first-child p { /* Específico para el texto de copyright de la columna 1 */
+    margin-top: 5px;
+    font-size: 0.8em;
+    color: #777;
+    /* Desactivamos flex/center para este párrafo en desktop */
+    justify-content: flex-start; 
+}
+
+.copyright-mobile {
+    display: none; /* Oculto por defecto en desktop */
+}
+
+/* --- RESPONSIVE (Menos de 768px) --- */
+@media (max-width: 768px) {
+    .footer-contenido {
+        flex-direction: column;
+        text-align: center;
+        gap: 40px;
+    }
+    
+    /* Centrar Títulos en Móvil */
+    .footer-col h3 { 
+        display: inline-block;
+        margin: 0 auto 15px auto; 
+    }
+    
+    /* Centrar Logo en Móvil */
+    .footer-logo {
+        margin: 0 auto 10px auto; 
+    }
+    
+    /* Centrar Contenido (Icono y Texto) */
+    .footer-col p,
+    .footer-links li a,
+    .redes-iconos a {
+        justify-content: center; /* Centra el contenido horizontalmente */
+    }
+
+    /* Manejo del Copyright */
+    .footer-col:first-child p { /* Ocultar el copyright en la columna en móvil */
+        display: none; 
+    }
+    
+    .copyright-mobile {
+        display: block; /* Mostrar el copyright centrado al final */
+        text-align: center;
+        border-top: 1px solid #333;
+        padding-top: 20px;
+        font-size: 0.9em;
+        color: #ccc;
+    }
+
+    /* Asegurar que las redes sociales se vean bien centradas */
+    .redes-sociales-col .redes-iconos {
+        align-items: center;
+    }
+}

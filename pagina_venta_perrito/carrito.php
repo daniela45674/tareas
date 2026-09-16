@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patitas Felices - Carrito</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style_carrito.css">
+    <link rel="stylesheet" href="css/style_footer.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">
+        <img src="imagenes/otras_imagenes/logo2.jpg" alt="Logo Patitas Felices">
+        <span>Patitas Felices</span>
+    </div>
+
+    <div id="hamburger" class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <nav id="menu" class="menu">
+        <ul>
+            <li><a href="home.php">Inicio</a></li>
+            <li><a href="productos.php">Productos</a></li>
+            <li>
+                <a href="carrito.php" style="color: #f29b2e; font-weight: bold;">
+                    <img src="imagenes/otras_imagenes/carrito.png" class="icono-carrito" alt="Carrito">
+                </a>
+            </li>
+            <li><a href="nosotros.php">Encuéntranos</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section class="carrito-section">
+    <h2 class="titulo-carrito">Tu Carrito</h2>
+
+    <!-- Botones de Moneda para sincronizar la conversión en el carrito -->
+    <div class="botones-moneda" style="margin-bottom: 25px;">
+        <button onclick="cambiarMoneda('USD')" class="btn-moneda" id="btnUSD">dólares</button>
+        <button onclick="cambiarMoneda('EUR')" class="btn-moneda" id="btnEUR">euros</button>
+        <button onclick="cambiarMoneda('PEN')" class="btn-moneda active" id="btnPEN">soles</button>
+    </div>
+
+    <div class="lista-carrito" id="listaCarrito">
+        <!-- Los ítems se cargan dinámicamente aquí -->
+    </div>
+
+    <div class="total-carrito">
+        <h2>Total general:  
+            <span id="totalGeneral">S/ 0.00</span>
+        </h2>
+    </div>
+
+    <div class="comprar-ahora-box">
+        <button onclick="enviarPedidoWhatsApp()" class="btn-comprar-ahora" style="border: none; cursor: pointer;">Comprar por WhatsApp 🛒📱</button>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="footer-contenido">
+
+        <div class="footer-col">
+            <img src="imagenes/otras_imagenes/logo2.jpg" class="footer-logo" alt="Logo Patitas Felices">
+            <p>&copy; <?php echo date("Y"); ?> Patitas Felices</p> 
+        </div>
+
+        <div class="footer-col">
+            <h3>Contacto</h3>
+            <p>Email: patitasfelices@gmail.com</p>
+            <p>Teléfono: 923258007</p>
+            <p>Dirección: Av. Principal #123</p>
+        </div>
+
+        <div class="footer-col">
+            <h3>Enlaces</h3>
+            <ul class="footer-links">
+                <li><a href="home.php">Inicio</a></li>
+                <li><a href="productos.php">Productos</a></li>
+                <li><a href="carrito.php">Carrito</a></li>
+                <li><a href="nosotros.php">Encuéntranos</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-col redes-sociales-col">
+            <h3>Síguenos</h3>
+            <div class="redes-iconos">
+                <a href="https://www.facebook.com/tucuennnnta" target="_blank">
+                    <img src="imagenes/otras_imagenes/faceboock.png" alt="Facebook"> Facebook
+                </a>
+                <a href="https://www.instagram.com/tucuennnnta" target="_blank">
+                    <img src="imagenes/otras_imagenes/instagran.png" alt="Instagram"> Instagram
+                </a>
+                <a href="https://www.twitter.com/tucuennnnta" target="_blank">
+                    <img src="imagenes/otras_imagenes/x.png" alt="Twitter"> Twitter
+                </a>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="copyright-mobile">
+        <p>&copy; <?php echo date("Y"); ?> Patitas Felices</p>
+    </div>
+</footer>
+
+<script src="js/script.js"></script>
+
+<script>
+// Cargar y renderizar el carrito al abrir la página
+document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(cargarCarrito, 200);
+});
+
+function cargarCarrito() {
+    const listaCarrito = document.getElementById("listaCarrito");
+    const totalGeneralEl = document.getElementById("totalGeneral");
+    
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    
+    listaCarrito.innerHTML = "";
+    let precioTotalSoles = 0;
+
+    if (carrito.length === 0) {
+        listaCarrito.innerHTML = `<p style="text-align:center; padding: 30px; color: #666; font-size: 18px;">Tu carrito está vacío 🐾</p>`;
+        totalGeneralEl.innerText = formatearPrecio(0);
+        return;
+    }
+
+    carrito.forEach((item, index) => {
+        let subtotalSoles = item.precio * item.cantidad;
+        precioTotalSoles += subtotalSoles;
+
+        let itemDiv = document.createElement("div");
+        itemDiv.className = "item-carrito";
+        itemDiv.innerHTML = `
+            <img src="${item.imagen}" alt="producto">
+            <div class="info-carrito">
+                <h3>${item.nombre}</h3>
+                <p class="precio-unit">Precio: <strong>${formatearPrecio(item.precio)}</strong></p>
+                
+                <div class="botones-carrito">
+                    <button type="button" class="btn-cantidad" onclick="cambiarCantidad(${index}, 1)">+</button>
+                    <input disabled class="cantidad-box" value="${item.cantidad}">
+                    <button type="button" class="btn-cantidad" onclick="cambiarCantidad(${index}, -1)">-</button>
+                </div>
+
+                <p class="subtotal">Subtotal: <strong>${formatearPrecio(subtotalSoles)}</strong></p>
+            </div>
+            <button type="button" class="btn-eliminar" onclick="eliminarItem(${index})">✖</button>
+        `;
+        listaCarrito.appendChild(itemDiv);
+    });
+
+    totalGeneralEl.innerText = formatearPrecio(precioTotalSoles);
+}
+
+// Sobrescribir o complementar la función cambiarMoneda para que también actualice el carrito en tiempo real
+const cambiarMonedaOriginal = window.cambiarMoneda;
+window.cambiarMoneda = function(moneda) {
+    if (typeof cambiarMonedaOriginal === 'function') {
+        cambiarMonedaOriginal(moneda);
+    }
+    // Refrescar el carrito para que se recalculen los precios con la nueva moneda seleccionada
+    cargarCarrito();
+};
+
+// Sumar o restar cantidades
+function cambiarCantidad(index, cambio) {
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    
+    carrito[index].cantidad += cambio;
+    
+    if (carrito[index].cantidad <= 0) {
+        carrito.splice(index, 1);
+    }
+
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+    cargarCarrito();
+}
+
+// Eliminar un producto individual
+function eliminarItem(index) {
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    carrito.splice(index, 1);
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+    
+    let aviso = document.createElement("div");
+    aviso.className = "mensaje-eliminado";
+    aviso.innerText = "Producto eliminado 🗑️";
+    document.body.appendChild(aviso);
+    setTimeout(() => { aviso.remove(); }, 1600);
+
+    cargarCarrito();
+}
+
+// Enviar pedido múltiple a WhatsApp con la moneda activa seleccionada
+function enviarPedidoWhatsApp() {
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    if (carrito.length === 0) {
+        alert("Tu carrito está vacío. ¡Agrega productos antes de pedir!");
+        return;
+    }
+
+    let mensaje = "¡Hola, Patitas Felices! 🐾 Deseo realizar el siguiente pedido:\n\n";
+    let precioTotalSoles = 0;
+
+    carrito.forEach((item, index) => {
+        let subtotalSoles = item.precio * item.cantidad;
+        precioTotalSoles += subtotalSoles;
+
+        mensaje += `*${index + 1}. ${item.nombre}*\n`;
+        mensaje += `   Cantidad: ${item.cantidad}\n`;
+        mensaje += `   Precio unitario: ${formatearPrecio(item.precio)}\n`;
+        mensaje += `   Subtotal: ${formatearPrecio(subtotalSoles)}\n\n`;
+    });
+
+    mensaje += `\n`;
+    mensaje += `*Total a pagar: ${formatearPrecio(precioTotalSoles)}*\n\n`;
+    mensaje += "Quedo a la espera de la confirmación. ¡Gracias!";
+
+    let numeroWhatsApp = "51923258007"; 
+    let url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+    
+    window.open(url, '_blank');
+}
+</script>
+
+</body>
+</html>
